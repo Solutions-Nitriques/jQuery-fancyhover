@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>jQuery FancyHover Test</title>
+<style type="text/css">
+	.ntr-fancybox-hover {
+		background-color: #333;
+		opacity: 0.3;
+	}
+	
+</style>
+</head>
+<body>
+	<a href="http://www.google.com">
+		<img src="http://www.google.com/images/logos/ps_logo2.png" class="fancyhover" />
+	</a>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+	<script src="jquery.fancyhover.js"></script>
+	<script>
+		(function($){
+			$(function() {
+				$('img.fancyhover').ntr$fancyhover();
+			});
+		})(jQuery);
+	</script>
+</body>
+</html>
