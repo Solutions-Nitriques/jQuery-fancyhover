@@ -40,7 +40,8 @@
 			
 			function _in(e) {
 				var t = $(this),
-					div = t.siblings('.'+opts.classname);
+					// div is added after t, so we used the first next slibling
+					div = t.next('.'+opts.classname).eq(0);
 				
 				if ($.isFunction(opts.before)) {
 					opts.before.call(this, div);
@@ -49,11 +50,11 @@
 				updateCss(t, div);
 				
 				div.show(0);
-				div.fadeTo(opts.durationIn, opts.opacity);
+				div.stop().fadeTo(opts.durationIn, opts.opacity);
 			};
 			
 			function _out(e) {
-				$(this).fadeTo(opts.durationOut, 0, function () {
+				$(this).stop().fadeTo(opts.durationOut, 0, function () {
 					$(this).hide(0);
 				});
 				
