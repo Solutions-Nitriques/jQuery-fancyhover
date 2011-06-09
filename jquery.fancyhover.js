@@ -49,8 +49,8 @@
 				
 				updateCss(t, div);
 				
-				div.show(0);
-				div.stop().fadeTo(opts.durationIn, opts.opacity);
+				div.stop().show(0);
+				div.fadeTo(opts.durationIn, opts.opacity);
 			};
 			
 			function _out(e) {
@@ -95,8 +95,12 @@
 				t.after(div);
 				
 				// hook up mouse events
-				div.mouseleave(_out);
-				t.mouseenter(_in);
+				div.hover(function(e) {
+					_in.call(t, e);	// call _in with t as the context
+				},_out);
+				t.hover(_in, function (e) {
+					_out.call(div, e); // call _out with div as the context
+				});
 			};
 		
 			this.each(hookOne);
