@@ -8,15 +8,19 @@
 * http://www.codeproject.com/info/cpol10.aspx
 
 * Name: jquery.fancyhover.js
-* Date: 2011-06-02
-* Version: 1.1
+* Date: 2011-07-06
+* Version: 1.2
 
 * Pre-requisites: none;
+
+* Version 1.2
+* 	Added the useOuter setting: will take padding and borders into count
+* 	Added the double events setting: will fire _in and _out on both the target and the div
 
 * Version 1.1
 * 	Added the possibility to pass options 
 * 	CSS is now updated each time the hover is show to help usign this plugin in slideshows
-* 
+ 
 * Version 1.0
 * 	Initial version
 
@@ -30,7 +34,12 @@
 		color: null,
 		opacity: 0.3,
 		before: null,
-		after: null
+		after: null,
+		useOuter: false,
+		
+		// this will fire _in and _out on both the target and the div
+		// usefull when passing before and/or after callbacks
+		doubleEvents: true 
 	};
 	
 	$.fn.extend({ // jQuery plugin
@@ -43,7 +52,7 @@
 					// div is added after t, so we used the first next slibling
 					div = t.next('.'+opts.classname).eq(0);
 				
-				if ($.isFunction(opts.before)) {
+				if (e && $.isFunction(opts.before)) {
 					opts.before.call(this, div);
 				}
 				
@@ -67,14 +76,15 @@
 				// abs positioning
 				div.css({top:t.position().top, left:t.position().left});
 				// set size the same as the target
-				div.width(t.width()).height(t.height());
+				div.width(opts.useOuter ? t.outerWidth() : t.width())
+				   .height(opts.useOuter ? t.outerHeight() : t.height());
 			}
 			
 			function hookOne(index, value) {
 				var t = $(value),
 					div = $('<div class="'+opts.classname+'"></div>');
 				
-				// set the background-color if requiered
+				// set the background-color if required
 				if (opts.color) {
 					div.css({backgroundColor:opts.color});
 				}
@@ -96,10 +106,10 @@
 				
 				// hook up mouse events
 				div.hover(function(e) {
-					_in.call(t, e);	// call _in with t as the context
+					if (opts.doubleEvents) _in.call(t, e);	// call _in with t as the context
 				},_out);
 				t.hover(_in, function (e) {
-					_out.call(div, e); // call _out with div as the context
+					if (opts.doubleEvents) _out.call(div, e); // call _out with div as the context
 				});
 			};
 		
