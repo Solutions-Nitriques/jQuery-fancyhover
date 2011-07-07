@@ -37,8 +37,8 @@
 		after: null,
 		useOuter: false,
 		
-		// this will fire _in and _out on both the target and the div
-		// usefull when passing before and/or after callbacks
+		// This will fire _in and _out on both the target and the div
+		// Useful to disable (set to false) when passing before and/or after callbacks
 		doubleEvents: true 
 	};
 	
